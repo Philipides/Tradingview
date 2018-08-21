@@ -1,0 +1,18 @@
+//@version=3
+study(title="Triple ConnorsRSI", shorttitle="TRSI" )
+// Prototype a base de RSI
+//Indicateur utilisant trois periodes de temps differentes
+ 
+len = input(14, minval=1, title="Length")
+
+res = input(title="Resolution", type=resolution, defval="60")
+src = close
+//up = rma(max(change(res), 0), len)
+//down = rma(-min(change(res), 0), len)
+up = rma(max(change(src), 0), len)
+down = rma(-min(change(src), 0), len)
+rsi = down == 0 ? 100 : up == 0 ? 0 : 100 - (100 / (1 + up / down))
+plot(rsi, color=purple)
+band1 = hline(70)
+band0 = hline(30)
+fill(band1, band0, color=purple, transp=90)
